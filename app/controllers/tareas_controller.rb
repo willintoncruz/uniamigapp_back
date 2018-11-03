@@ -1,11 +1,11 @@
 class TareasController < ApplicationController
-  before_action :set_tarea, only: [:show, :update, :destroy]
+  before_action :set_tarea, only: [:show, :update, :destroy, :buscarTarea]
   before_action :set_usuario
 
   # GET /tareas
   def index
     @tareas = @usuario.tareas
-
+    @tareas = @usuario.tareas.where("titulo like ?",  params[:consulta])
     render json: @tareas
   end
 
@@ -39,6 +39,9 @@ class TareasController < ApplicationController
     @tarea.destroy
   end
 
+  
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tarea
@@ -52,6 +55,7 @@ class TareasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def tarea_params
-      params.require(:tarea).permit(:usuario_id, :titulo, :finalizada)
+      params.require(:tarea).permit(:usuario_id, :titulo, :finalizada, :consulta)
     end
+
 end
