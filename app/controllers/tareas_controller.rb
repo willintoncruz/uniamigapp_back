@@ -4,8 +4,20 @@ class TareasController < ApplicationController
 
   # GET /tareas
   def index
-    @tareas = @usuario.tareas
-    @tareas = @usuario.tareas.where("titulo like ?",  params[:consulta])
+    
+    puts "parametros:::"
+    puts  params[:consulta] 
+    valorConsulta
+
+    if params[:consulta].present?
+    puts "existe"
+    #@tareas = @usuario.tareas.where("titulo like ?",  params[:consulta])
+    @tareas = @usuario.tareas.where("upper(titulo) like ?",  "%#{params[:consulta].upcase}%")
+    else
+      @tareas = @usuario.tareas
+      puts "no existe"
+    end
+    
     render json: @tareas
   end
 
