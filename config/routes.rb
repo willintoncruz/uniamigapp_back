@@ -1,4 +1,7 @@
 Rails.application.routes.draw do  
+  resources :actividad_personas
+  resources :actividads
+  resources :personas
   post 'usuario_token' => 'usuario_token#create'
   resources :usuarios do
     resources :tareas
