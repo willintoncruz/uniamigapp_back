@@ -8,7 +8,15 @@ class ActividadsController < ApplicationController
       puts "existe"
       #@tareas = @usuario.tareas.where("titulo like ?",  params[:consulta])
       @actividads = Actividad.where("persona_id = ?",  params[:persona_id])
-      else
+    end 
+     
+      if params[:descripcion].present?
+      puts "existe descripcion"
+      @actividads = Actividad.where("upper(descripcion) like ?", "%#{params[:descripcion].upcase}%")
+      # @actividads = @usuario.tareas.where("upper(titulo) like ?",  "%#{params[:descripcion].upcase}%")
+      end
+
+      if !params[:persona_id].present? && !params[:descripcion].present?
         @actividads = Actividad.all
         puts "no existe"
       end

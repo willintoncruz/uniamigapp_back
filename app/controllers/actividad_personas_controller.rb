@@ -3,10 +3,28 @@ class ActividadPersonasController < ApplicationController
 
   # GET /actividad_personas
   def index
-    @actividad_personas = ActividadPersona.all
+    
+    if params[:persona_id].present?
+      puts "existe"
+      #@tareas = @usuario.tareas.where("titulo like ?",  params[:consulta])
+      @actividad_personas = ActividadPersona.where("persona_id = ?",  params[:persona_id])
+     
+      else
+        @actividad_personas = ActividadPersona.all
+        puts "no existe"
+      end
+
+
+    # @actividad_personas = ActividadPersona.all
 
     render json: @actividad_personas
   end
+
+
+
+
+
+
 
   # GET /actividad_personas/1
   def show
